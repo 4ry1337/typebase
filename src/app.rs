@@ -1,9 +1,10 @@
 use std::io::Write;
 
-use crate::{command::Command, repl::InputBuffer, statement::Statement};
+use crate::{command::Command, repl::InputBuffer, statement::Statement, table::TableSchema};
 
 pub struct App {
     input_buffer: InputBuffer,
+    tables: Vec<Box<dyn TableSchema>>,
 }
 
 impl App {
@@ -11,6 +12,10 @@ impl App {
         Self {
             input_buffer: InputBuffer::new(),
         }
+    }
+
+    pub fn add_table(&mut self, table: dyn TableSchema) {
+        self.tables.push(table);
     }
 
     pub fn run(&mut self) -> ! {

@@ -1,6 +1,6 @@
 use thiserror::Error;
 
-use crate::statement::StatementError;
+use crate::{command::CommandError, statement::StatementError};
 
 pub type Result<T> = std::result::Result<T, SQLError>;
 
@@ -10,4 +10,6 @@ pub enum SQLError {
     IOError(#[from] std::io::Error),
     #[error("StatementError: {0}")]
     StatementError(#[from] StatementError),
+    #[error("CommandError: {0}")]
+    CommandError(#[from] CommandError),
 }
